@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+ <head>
+  <title> New Document </title>
+  <meta name="Generator" content="EditPlus">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+ </head>
+<style>
+      html {
+        height: 100%;
+      }
+      body {
+        font-family: Arial, sans-serif;
+        font-size: 83%;
+
+        padding: 0;
+        margin: 0;
+        height: 100%;
+      }
+      a {
+        color: black;
+      }
+      #content {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin-left: -260px;
+        width: 520px;
+        margin-top: -300px;
+        height: 600px;
+      }
+      #doodle {
+        width: 520px;
+        height: 600px;
+      }
+      #frame {
+        position: relative;
+        left: 110px;
+        top: 205px;
+        width: 410px;
+        height: 212px;
+		background-image:url(bg.png);
+      }
+    </style>
+ <body>
+   <audio controls="controls" autoplay="autoplay">
+      <source src="https://github.com/suitzero/happyworld/raw/master/EminorG.mp3" type="audio/mpeg" />
+      Your browser does not support the audio element.
+   </audio>
+
+	<div id='content'>
+	<canvas id='frame'>
+	</div>
+    </div>
+    <script>
+
+		var canvas = document.getElementById('frame');
+		var ctx = canvas.getContext("2d");
+
+	  var dx = 5;
+var dy = 5;
+var x = 10;
+var prex=x;
+var y = 30;
+var prey=y;
+var WIDTH = 100;
+var HEIGHT = 70;
+	 function Update(){
+		if (prex!=x|| prey!=y)
+		{
+
+         ctx.clearRect(0, 0, canvas.width, canvas.height);  
+		var img = new Image();
+		img.onload = function () {
+		    ctx.drawImage(img, x, y,70,96);
+		}
+		img.src = "char.png";
+				}
+      }
+
+	  function doKeyDown(evt){
+switch (evt.keyCode) {
+case 38:  
+if (y - dy > 0){
+y -= dy;
+}
+break;
+case 40:  
+if (y + dy < HEIGHT){
+y += dy;
+}
+break;
+case 37:  
+if (x - dx > 0){
+x -= dx;
+}
+break;
+case 39:  
+if (x + dx < WIDTH){
+x += dx;
+}
+break;
+}
+}
+		setInterval(Update, 30);
+		window.addEventListener('keydown',doKeyDown,true);
+    </script>
+
+ </body>
+</html>
