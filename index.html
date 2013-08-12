@@ -45,6 +45,7 @@
               #myTypingText {
                 border-radius: 15px;
                 background-color:#000;
+                margin-top: 20px;
                 width:500px;
                 height:70px;
                 padding:12px;
@@ -56,7 +57,7 @@
         </style>
      </head>
      <body>
-
+<img id="char" src="char1.png" style="visibility:hidden">
     <div id='content'>
         <div id='headline'>
             LOOKING FOR THE COMRADE
@@ -64,7 +65,7 @@
       <div id='doodle'>
                     <div id="myTypingText"></div>
                             <script type="text/javascript" language="javascript">
-var myString = "Place your string data here, and as much as you like.";
+var myString = "My cognition of world is so small and scattered to small pieces.";
 var myArray = myString.split("");
 var loopTimer;
 function frameLooper() {
@@ -76,6 +77,47 @@ function frameLooper() {
 	loopTimer = setTimeout('frameLooper()',70);
 }
 frameLooper();
+
+var engine = {};
+engine.init = function(){
+    body = document.getElementById('doodle');
+    canvasEl = document.createElement('canvas');
+
+    canvasEl.width = 520;
+    canvasEl.height = 300;
+
+    canvasEl.style.position = 'absolute';
+    canvasEl.style.left = 0;
+    canvasEl.style.bottom = 0;
+
+    body.appendChild(canvasEl);
+
+    this.context = canvasEl.getContext('2d');
+}
+
+engine.drawTriangle = function(){
+    this.context.fillStyle   = '#aaa';
+    this.context.lineWidth   = 1;
+
+    this.context.beginPath();
+    // Start from the top-left point.
+    this.context.moveTo(125, 50); // give the (x,y) coordinates
+    this.context.lineTo(100, 100);
+    this.context.lineTo(150, 100);
+    this.context.lineTo(125, 50);
+    this.context.fill();
+    this.context.stroke();
+    this.context.closePath();
+}
+
+engine.drawImage= function(){
+    var img=document.getElementById("char");
+    this.context.drawImage(img,200,100);
+}
+
+engine.init();
+engine.drawTriangle();
+engine.drawImage();
 </script>
       </div>
     </div>
