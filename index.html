@@ -93,6 +93,15 @@ engine.init = function(){
     body.appendChild(canvasEl);
 
     this.context = canvasEl.getContext('2d');
+    
+   this.dx = 5;
+this.dy = 5;
+this.x = 10;
+this.prex=0;
+this.y = 30;
+this.prey=0;
+this.WIDTH = 400;
+this.HEIGHT = 200;
 }
 
 engine.drawTriangle = function(){
@@ -110,14 +119,48 @@ engine.drawTriangle = function(){
     this.context.closePath();
 }
 
+engine.doKeyDown = 	function(evt){
+switch (evt.keyCode) {
+case 38:  
+if (engine.y - engine.dy > 0){
+engine.y -= engine.dy;
+}
+break;
+case 40:  
+if (engine.y + engine.dy < engine.HEIGHT){
+engine.y += engine.dy;
+}
+break;
+case 37:  
+if (engine.x - engine.dx > 0){
+engine.x -= engine.dx;
+}
+break;
+case 39:  
+if (engine.x + engine.dx < engine.WIDTH){
+engine.x += engine.dx;
+}
+break;
+}
+}
+
 engine.drawImage= function(){
     var img=document.getElementById("char");
-    this.context.drawImage(img,200,100);
+    this.context.drawImage(img,this.x,this.y);
+}
+
+engine.renderScene = function()
+{
+    this.context.clearRect(0,0,this.WIDTH,this.HEIGHT);
+    this.drawTriangle();
+    this.drawImage();
 }
 
 engine.init();
-engine.drawTriangle();
-engine.drawImage();
+window.addEventListener('keydown',engine.doKeyDown,true);
+setInterval('engine.renderScene()',10);
+
+
 </script>
       </div>
     </div>
