@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<script id="f" type="x/f">
+<!DOCTYPE html><script id="f" type="x/f">
+// forked from http://glslsandbox.com/e#20806.1
 #ifdef GL_ES
 precision mediump float;
 #endif
@@ -9,6 +9,7 @@ uniform float t;
 uniform vec2 mouse;
 uniform vec2 r;
 uniform float pitch;
+uniform float pitch2;
 
 vec3 iMouse=vec3(t*50.0);
 vec2 iResolution=r;
@@ -20,6 +21,7 @@ float iGlobalTime=t;
 void main(){
     vec4 o2 = gl_FragCoord/iResolution.xyxx-.5, d=o2, r1, z;
     float t = iGlobalTime, c;
+	t = iGlobalTime*pitch2;
     o2.z += t;
     for(int i=0; i<60; i++){
        	r1 = cos(o2+ o2.w*sin(t)*0.9);
@@ -38,7 +40,7 @@ void main(){
 <script id="v" type="x/v">
 attribute vec3 p;void main(){gl_Position=vec4(p,1.);}
 </script>
-<script src="http://www.keithwhor.com/music/audiosynth.js"></script>
+<script src="audiosynth.js"></script>
 <script>
 w=window;
 w.onload=function(){
@@ -66,6 +68,7 @@ w.onload=function(){
 	u.t=g.getUniformLocation(p,'t');
 	u.r=g.getUniformLocation(p,'r');
 	u.pitch = g.getUniformLocation(p,'pitch');
+	u.pitch2 = g.getUniformLocation(p,'pitch2');
 	g.bindBuffer(34962,g.createBuffer()); // ARRAY_BUFFER: 34962
 	g.bufferData(34962,new Float32Array([-1,1,0,-1,-1,0,1,1,0,1,-1,0]),35044); // STATIC_DRAW: 35044
 	a=g.getAttribLocation(p,'p');
@@ -87,6 +90,7 @@ w.onload=function(){
 		g.viewport(0,0,x,y);
 		d=(Date.now()-z)*.001;
 		pitch = 0;
+		pitch2 = 0;
 		if(d-last>0.25)
 		{
 			last =d;
@@ -102,6 +106,7 @@ w.onload=function(){
 				var soloi = Math.floor(Math.random()*10%penta.length);
 				acous.play(penta[soloi], 2, 3);
 				Synth.setVolume(1.);
+				pitch2 = soloi*0.1;
 			}
 			var soloi = Math.floor(Math.random()*10%penta.length);
 		}		
@@ -112,6 +117,10 @@ w.onload=function(){
 		{
 			g.uniform1f(u.pitch,pitch);
 		}
+		if (pitch2)
+		{
+			g.uniform1f(u.pitch2,pitch2);
+		}		
 		g.drawArrays(g.TRIANGLE_STRIP,0,4);
 		g.flush();
 
